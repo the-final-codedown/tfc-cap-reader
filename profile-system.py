@@ -5,7 +5,7 @@ import pymongo
 
 # port : 8083
 client = pymongo.MongoClient(
-    "mongodb://" + os.getenv("DB_HOST", "localhost") + ":" + os.getenv('MONGODB_PORT', '27017') + "/")
+    "mongodb://" + os.getenv("DB_HOST", "localhost") + ":" + os.getenv('DB_PORT', '27017') + "/")
 db = client["profiles-micro-service"]
 col = db["profiles"]
 
