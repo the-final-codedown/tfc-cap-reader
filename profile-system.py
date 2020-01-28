@@ -24,17 +24,25 @@ class ProfileUpdate(object):
         resp.status = falcon.HTTP_200
         return resp
 
-    def on_get(self, req, resp, email=None):
+    def on_get_single(self, req, resp, email=None):
         print(email)
         if email is not None:
             x = col.find_one({"_id": email})
             print(x)
-            resp.body = json.dumps(x)
+            resp.body = json.dumps({'email': email})
             resp.status = falcon.HTTP_200
         else:
             resp.status = falcon.HTTP_400
         return resp
 
+    def on_get(self, req, resp):
+        list_doc = []
+        cursor = col.find({})
+        for document in cursor:
+            list_doc.append(document)
+        resp.body = json.dumps(list_doc)
+        resp.status = falcon.HTTP_200
+        return resp
 
 
 def setup_profile():
@@ -42,6 +50,6 @@ def setup_profile():
 
     profile_update = ProfileUpdate()
     app.add_route('/profiles', profile_update)
-    app.add_route('/profiles/{email}', profile_update)
+    app.add_route('/profiles/{email}', profile_update, suffix='single')
 
     return app
