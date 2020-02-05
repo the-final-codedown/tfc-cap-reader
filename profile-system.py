@@ -6,8 +6,8 @@ import pymongo
 # port : 8083
 client = pymongo.MongoClient(
     "mongodb://" + os.getenv("DB_HOST", "localhost") + ":" + os.getenv('DB_PORT', '27017') + "/")
-db = client["profiles-micro-service"]
-col = db["profiles"]
+db = client["tfc"]
+col = db["profile"]
 
 
 class ProfileUpdate(object):
