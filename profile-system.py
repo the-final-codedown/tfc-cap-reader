@@ -16,13 +16,13 @@ class ProfileUpdate(object):
         result = req.media
         email = result["email"]
         model = {"_id": email}
+        accounts = []
         if col.find_one({"_id": email}):
             resp.body = model
         else:
-            accounts=[]
             col.insert_one({"_id":email,"_class":"fr.polytech.al.tfc.profile.model.Profile","accounts":accounts})
         print(result["email"])
-        resp.body = json.dumps(model)
+        resp.body = json.dumps({'email': model['_id'], "accounts": accounts})
         resp.status = falcon.HTTP_200
         return resp
 
